@@ -2,6 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
+import '../Assetplayer/Asset_player.dart';
 import '../custom/Songlist_custom.dart';
 import '../database/box.dart';
 import '../screens/Nowplaying_screen.dart';
@@ -56,7 +57,15 @@ class _SongstabState extends State<Songstab> {
                 widget.audiosongs[index].metas.artist.toString(),
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
-              onTap: () {},
+              onTap: () async {
+                await OpenAssetAudio(allsong: [], index: index)
+                    .openAsset(index: index, audios: widget.audiosongs);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Nowplaying(
+                          index: index,
+                          audiosongs: widget.audiosongs,
+                        )));
+              },
             ));
   }
 }

@@ -16,7 +16,7 @@ class Splash_screen extends StatefulWidget {
 
 class _Splash_screenState extends State<Splash_screen> {
   void initState() {
-    gotoLogin();
+    GotoHomescreen();
     super.initState();
     fetchSongs();
   }
@@ -102,7 +102,7 @@ class _Splash_screenState extends State<Splash_screen> {
     );
   }
 
-  gotoLogin() async {
+  GotoHomescreen() async {
     await Future.delayed(Duration(seconds: 4));
 
     Navigator.of(context).pushReplacement(
