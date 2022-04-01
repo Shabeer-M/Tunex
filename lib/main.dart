@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tunexx/database/box.dart';
-import 'package:tunexx/screens/Home_screen.dart';
-
 import 'database/Songdatabe.dart';
 import 'screens/Splash_screen.dart';
 
@@ -16,7 +14,6 @@ void main(List<String> args) async {
 
 class Myapp extends StatefulWidget {
   const Myapp({Key? key}) : super(key: key);
-
   @override
   State<Myapp> createState() => _MyappState();
 }

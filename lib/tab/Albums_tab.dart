@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../screens/Playlist_inner.dart';
 
 class Albumstab extends StatelessWidget {
@@ -14,51 +13,38 @@ class Albumstab extends StatelessWidget {
           children: [
             ListTile(
               leading: Image.asset('assets/icons8-music-heart-96.png'),
-              title: Text(
+              title: const Text(
                 "Music",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              subtitle: Text(
+              subtitle: const Text(
                 "9 songs",
                 style: TextStyle(color: Colors.white),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Playlistinner_screen()),
-                );
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Image.asset('assets/icons8-music-heart-96.png'),
-              title: Text(
+              title: const Text(
                 "Beats",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              subtitle: Text(
+              subtitle: const Text(
                 "259 songs",
                 style: TextStyle(color: Colors.white),
               ),
             ),
             ListTile(
-              leading: Image.asset('assets/icons8-music-heart-96.png'),
-              title: Text(
-                "Malayalam",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              subtitle: Text(
-                "99 songs",
-                style: TextStyle(color: Colors.white),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Playlistinner_screen()),
-                );
-              },
-            )
+                leading: Image.asset('assets/icons8-music-heart-96.png'),
+                title: const Text(
+                  "Malayalam",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                subtitle: const Text(
+                  "99 songs",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {})
           ],
         ),
       ),

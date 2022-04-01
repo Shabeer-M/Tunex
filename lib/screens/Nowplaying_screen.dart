@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:tunexx/database/Songdatabe.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../custom/buildsheet.dart';
 import '../database/box.dart';
 
 class Nowplaying extends StatefulWidget {
@@ -21,6 +24,8 @@ class NowplayingState extends State<Nowplaying> {
   String currentTime = '', endTime = '';
 
   bool isPlaying = false;
+  int rep = 0;
+  int suffle = 0;
 
   final AssetsAudioPlayer assetAudioPlayer = AssetsAudioPlayer.withId("0");
 
@@ -85,7 +90,7 @@ class NowplayingState extends State<Nowplaying> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_drop_down,
                             size: 40,
                             color: Colors.white,
@@ -120,7 +125,7 @@ class NowplayingState extends State<Nowplaying> {
                   ),
                   Text(
                     myAudio.metas.title!,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.greenAccent,
                         fontSize: 20,
                         letterSpacing: 2.0,
@@ -129,49 +134,44 @@ class NowplayingState extends State<Nowplaying> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * .010,
                   ),
-                  Text(
-                    myAudio.metas.artist!,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 227, 233, 230),
-                        fontSize: 15,
-                        letterSpacing: 2.0,
-                        fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: (20),
+                    ),
+                    child: Text(
+                      myAudio.metas.artist!,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 227, 233, 230),
+                          fontSize: 15,
+                          letterSpacing: 2.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      child: seekBar(context),
+                    ),
                   ),
 
-                  StreamBuilder<Duration>(
-                      stream: assetAudioPlayer.currentPosition,
-                      builder: (context, snapshot) {
-                        return Slider(
-                          inactiveColor: Colors.grey,
-                          activeColor: Colors.greenAccent,
-                          max: playing.audio.duration.inMilliseconds.toDouble(),
-                          value: snapshot.data == null
-                              ? 0
-                              : snapshot.data!.inMilliseconds.toDouble(),
-                          onChanged: (value) {
-                            assetAudioPlayer
-                                .seek(Duration(milliseconds: value.floor()));
-                          },
-                        );
-                      }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Text(currentTime,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Color.fromARGB(255, 218, 215, 215))),
-                      SizedBox(
+                      const SizedBox(
                         width: 320,
                       ),
                       Text(
                         endTime,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Color.fromARGB(255, 218, 215, 215)),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                     ],
@@ -180,13 +180,17 @@ class NowplayingState extends State<Nowplaying> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        color: Colors.white,
-                        icon: new Icon(
+                        icon: Icon(
                           Icons.shuffle,
+                          color: assetAudioPlayer.isShuffling.value
+                              ? Colors.green
+                              : Colors.white,
                           size: 30,
                         ),
                         onPressed: () {
-                          assetAudioPlayer.toggleShuffle();
+                          setState(() {
+                            assetAudioPlayer.toggleShuffle();
+                          });
                         },
                       ),
                       // SizedBox(
@@ -194,7 +198,7 @@ class NowplayingState extends State<Nowplaying> {
                       // ),
                       IconButton(
                         color: Colors.white,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.skip_previous,
                           size: 30,
                         ),
@@ -222,7 +226,7 @@ class NowplayingState extends State<Nowplaying> {
                       ),
                       IconButton(
                         color: Colors.white,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.skip_next,
                           size: 30,
                         ),
@@ -233,11 +237,19 @@ class NowplayingState extends State<Nowplaying> {
                       IconButton(
                         icon: Icon(
                           repeatf,
-                          color: Colors.white,
+                          color: rep % 2 == 0 ? Colors.white : Colors.green,
                           size: 30,
                         ),
                         onPressed: () {
-                          assetAudioPlayer.setLoopMode(LoopMode.single);
+                          setState(() {
+                            if (rep % 2 == 0) {
+                              assetAudioPlayer.setLoopMode(LoopMode.single);
+                              rep++;
+                            } else {
+                              assetAudioPlayer.setLoopMode(LoopMode.none);
+                              rep++;
+                            }
+                          });
                         },
                       ),
                     ],
@@ -250,7 +262,7 @@ class NowplayingState extends State<Nowplaying> {
                     children: [
                       IconButton(
                         color: Colors.white,
-                        icon: new Icon(
+                        icon: const Icon(
                           Icons.heart_broken,
                           size: 30,
                         ),
@@ -258,11 +270,21 @@ class NowplayingState extends State<Nowplaying> {
                       ),
                       IconButton(
                         color: Colors.white,
-                        icon: new Icon(
+                        icon: const Icon(
                           Icons.playlist_add,
                           size: 30,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.green[100],
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(80))),
+                              context: context,
+                              builder: (context) => BuildSheet(song: myAudio)
+                              // buildSheet(song: dbSongs[index]),
+                              );
+                        },
                       ),
                     ],
                   ),
@@ -299,5 +321,30 @@ class NowplayingState extends State<Nowplaying> {
             );
           },
         ));
+  }
+
+  Widget seekBar(BuildContext ctx) {
+    return assetAudioPlayer.builderRealtimePlayingInfos(
+      builder: (ctx, infos) {
+        Duration currentPos = infos.currentPosition;
+        Duration total = infos.duration;
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+          child: ProgressBar(
+            progress: currentPos,
+            total: total,
+            progressBarColor: Colors.greenAccent,
+            baseBarColor: Colors.grey,
+            thumbColor: Colors.greenAccent,
+            timeLabelTextStyle: GoogleFonts.poppins(
+              color: Colors.white,
+            ),
+            onSeek: (to) {
+              assetAudioPlayer.seek(to);
+            },
+          ),
+        );
+      },
+    );
   }
 }

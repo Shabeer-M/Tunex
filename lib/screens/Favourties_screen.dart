@@ -34,23 +34,23 @@ class _Favoourties_screenState extends State<Favoourties_screen> {
           child: ListView(
         children: [
           Card(
-              color: Color.fromARGB(73, 105, 168, 240),
+              color: const Color.fromARGB(73, 105, 168, 240),
               child: ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   backgroundImage: AssetImage('assets/Arbic.jpg'),
                 ),
-                title: Text(
+                title: const Text(
                   "Halamathi Habibo..",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete,
                       size: 30,
                       color: Color.fromARGB(255, 243, 242, 242),
                     )),
-                subtitle: Text("Deepthi Balasubramaniyan"),
+                subtitle: const Text("Deepthi Balasubramaniyan"),
                 dense: true,
                 selected: true,
                 onTap: () {
@@ -62,18 +62,18 @@ class _Favoourties_screenState extends State<Favoourties_screen> {
                 },
               )),
           Card(
-              color: Color.fromARGB(73, 105, 168, 240),
+              color: const Color.fromARGB(73, 105, 168, 240),
               child: ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   backgroundImage: AssetImage('assets/closer.jpg'),
                 ),
-                title: Text(
+                title: const Text(
                   "Closer..",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete,
                       size: 30,
                       color: Colors.white,
@@ -90,23 +90,23 @@ class _Favoourties_screenState extends State<Favoourties_screen> {
                 },
               )),
           Card(
-              color: Color.fromARGB(73, 105, 168, 240),
+              color: const Color.fromARGB(73, 105, 168, 240),
               child: ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   backgroundImage: AssetImage('assets/billa.jpg'),
                 ),
-                title: Text(
+                title: const Text(
                   "My Name is Billa..",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete,
                       size: 30,
                       color: Colors.white,
                     )),
-                subtitle: Text(" S. P Balasubramaniyan"),
+                subtitle: const Text(" S. P Balasubramaniyan"),
                 dense: true,
                 selected: true,
                 onTap: () {

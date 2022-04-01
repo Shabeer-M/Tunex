@@ -76,14 +76,14 @@ class _Splash_screenState extends State<Splash_screen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: MediaQuery.of(context).size.height * .44),
-            Text("Tunex",
+            const Text("Tunex",
                 style: TextStyle(
                   color: Color.fromARGB(244, 230, 206, 206),
                   fontSize: 74.0,
                   letterSpacing: 8.0,
                   fontWeight: FontWeight.bold,
                 )),
-            Text(
+            const Text(
               "Enjoy Music",
               style: TextStyle(
                 color: Color.fromARGB(255, 11, 8, 230),

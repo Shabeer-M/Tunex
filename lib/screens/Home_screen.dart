@@ -1,6 +1,5 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-
 import '../tab/Albums_tab.dart';
 import '../tab/Playlist_tab.dart';
 import '../tab/Songs_tab.dart';
@@ -117,18 +116,8 @@ class _Home_screenState extends State<Home_screen> {
             audiosongs: widget.allsong,
           ),
           const Albumstab(),
-          const Playlisttab(),
+          const Library(),
         ]),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => Nowplaying_screen()),
-            // );
-          },
-          backgroundColor: Colors.greenAccent,
-          child: const Icon(Icons.play_arrow),
-        ),
       ),
     );
   }

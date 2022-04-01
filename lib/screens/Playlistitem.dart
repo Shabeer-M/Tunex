@@ -42,7 +42,7 @@ class Playlistitem extends StatelessWidget {
               ),
             ),
           ],
-          bottom: TabBar(tabs: [
+          bottom: const TabBar(tabs: [
             Tab(
               text: "Songs",
               icon: Icon(Icons.music_note),
@@ -60,12 +60,12 @@ class Playlistitem extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(children: [
                   ListTile(
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.heart_broken_outlined,
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: Text(
+                    title: const Text(
                       "Favourites",
                       style: TextStyle(
                           color: Colors.white,
@@ -76,7 +76,7 @@ class Playlistitem extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Favoourties_screen()),
+                            builder: (context) => const Favoourties_screen()),
                       );
                     },
                   ),
