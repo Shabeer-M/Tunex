@@ -27,7 +27,12 @@ class _Playlistinner_screenState extends State<Playlistinner_screen> {
   @override
   void initState() {
     super.initState();
-    // getSongs();
+    getSongs();
+  }
+
+  getSongs() {
+    dbSongs = box.get("musics") as List<Songsdb>;
+    playlistSongs = box.get(widget.playlistName)!.cast<Songsdb>();
   }
 
   @override
@@ -52,96 +57,6 @@ class _Playlistinner_screenState extends State<Playlistinner_screen> {
           ),
         ),
       ),
-      // body: Container(
-      //     child: ListView(
-      //   children: [
-      //     Card(
-      //         color: Color.fromARGB(31, 105, 240, 175),
-      //         child: ListTile(
-      //           leading: CircleAvatar(
-      //             backgroundImage: AssetImage('assets/Arbic.jpg'),
-      //           ),
-      //           title: Text(
-      //             "Halamathi Habibo..",
-      //             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      //           ),
-      //           trailing: IconButton(
-      //               onPressed: () {},
-      //               icon: Icon(
-      //                 Icons.more_vert,
-      //                 size: 35,
-      //                 color: Color.fromARGB(255, 243, 242, 242),
-      //               )),
-      //           subtitle: Text("Deepthi Balasubramaniyan"),
-      //           dense: true,
-      //           selected: true,
-      //           onTap: () {
-      //             // Navigator.push(
-      //             //   context,
-      //             //   MaterialPageRoute(
-      //             //       builder: (context) => Nowplaying_screen()),
-      //             // );
-      //           },
-      //         )),
-      //     Card(
-      //         color: const Color.fromARGB(31, 105, 240, 175),
-      //         child: ListTile(
-      //           leading: const CircleAvatar(
-      //             backgroundImage: AssetImage('assets/closer.jpg'),
-      //           ),
-      //           title: const Text(
-      //             "Closer..",
-      //             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      //           ),
-      //           trailing: IconButton(
-      //               onPressed: () {},
-      //               icon: const Icon(
-      //                 Icons.more_vert,
-      //                 size: 35,
-      //                 color: Colors.white,
-      //               )),
-      //           subtitle: Text("The Chainsmoker"),
-      //           dense: true,
-      //           selected: true,
-      //           onTap: () {
-      //             // Navigator.push(
-      //             //   context,
-      //             //   MaterialPageRoute(
-      //             //       builder: (context) => Nowplaying_screen()),
-      //             // );
-      //           },
-      //         )),
-      //     Card(
-      //         color: Color.fromARGB(31, 105, 240, 175),
-      //         child: ListTile(
-      //           leading: CircleAvatar(
-      //             backgroundImage: AssetImage('assets/billa.jpg'),
-      //           ),
-      //           title: Text(
-      //             "My Name is Billa..",
-      //             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      //           ),
-      //           trailing: IconButton(
-      //               onPressed: () {},
-      //               icon: Icon(
-      //                 Icons.more_vert,
-      //                 size: 35,
-      //                 color: Colors.white,
-      //               )),
-      //           subtitle: Text(" S. P Balasubramaniyan"),
-      //           dense: true,
-      //           selected: true,
-      //           onTap: () {
-      //             // Navigator.push(
-      //             //   context,
-      //             //   MaterialPageRoute(
-      //             //       builder: (context) => Nowplaying_screen()),
-      //             // );
-      //           },
-      //         )),
-      //   ],
-      //   padding: EdgeInsets.all(20),
-      // )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -204,6 +119,8 @@ class _Playlistinner_screenState extends State<Playlistinner_screen> {
                             OpenAssetAudio(allsong: playPlaylist, index: index)
                                 .openAsset(index: index, audios: playPlaylist);
 
+                            LoopMode.playlist;
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -230,8 +147,7 @@ class _Playlistinner_screenState extends State<Playlistinner_screen> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15)),
                                     image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/abstract-vector-element-music-design-260nw-1031659504.webp"),
+                                      image: AssetImage("assets/defult.jpeg"),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -253,6 +169,24 @@ class _Playlistinner_screenState extends State<Playlistinner_screen> {
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white),
+                            ),
+                            trailing: GestureDetector(
+                              child: Icon(
+                                Icons.remove_circle,
+                                color: Colors.red,
+                              ),
+                              onTap: () async {
+                                // playlistSongs.removeWhere((elemet) =>
+                                //     elemet.id.toString() ==
+                                //     dbSongs![index].id.toString());
+
+                                // await box.put("song", playlistSongs);
+                                // setState(() {});
+                                setState(() {
+                                  playlistSongs.removeAt(index);
+                                  // box.put("songs", playlistSongs);
+                                });
+                              },
                             ),
                           ),
                         ),

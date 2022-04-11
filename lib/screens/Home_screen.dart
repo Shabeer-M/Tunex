@@ -1,7 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import '../tab/Albums_tab.dart';
+
 import '../tab/Playlist_tab.dart';
+import '../tab/Search_tab.dart';
 import '../tab/Songs_tab.dart';
 import 'Settings_screen.dart';
 
@@ -38,54 +39,45 @@ class _Home_screenState extends State<Home_screen> {
             height: 48.0,
           ),
           title: myField,
-          // title: Text(
-          //   myField',
-          //   style: TextStyle(
-          //     fontSize: 30.0,
-          //     fontWeight: FontWeight.bold,
-          //     color: Colors.white,
-          //     letterSpacing: 3.0,
-          //   ),
-          // ),
           actions: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (myIcon.icon == Icons.search) {
-                      myIcon = const Icon(Icons.clear);
-                      myField = TextField(
-                        onChanged: (value) {
-                          searchInput = value;
-                          setState(() {});
-                        },
-                        decoration: const InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintText: 'Search here',
-                        ),
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 236, 232, 232),
-                            fontSize: 18),
-                      );
-                    } else {
-                      setState(() {
-                        searchInput = '';
-                      });
-                      myIcon = const Icon(Icons.search);
-                      myField = const Text(
-                        'TuneX',
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 3.0,
-                            color: Colors.white),
-                      );
-                    }
-                  });
-                },
-                icon: myIcon),
+            // IconButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         if (myIcon.icon == Icons.search) {
+            //           myIcon = const Icon(Icons.clear);
+            //           myField = TextField(
+            //             onChanged: (value) {
+            //               searchInput = value;
+            //               setState(() {});
+            //             },
+            //             decoration: const InputDecoration(
+            //               enabledBorder: UnderlineInputBorder(
+            //                   borderSide: BorderSide(color: Colors.white)),
+            //               focusedBorder: UnderlineInputBorder(
+            //                   borderSide: BorderSide(color: Colors.white)),
+            //               hintText: 'Search here',
+            //             ),
+            //             style: const TextStyle(
+            //                 color: Color.fromARGB(255, 236, 232, 232),
+            //                 fontSize: 18),
+            //           );
+            //         } else {
+            //           setState(() {
+            //             searchInput = '';
+            //           });
+            //           myIcon = const Icon(Icons.search);
+            //           myField = const Text(
+            //             'TuneX',
+            //             style: TextStyle(
+            //                 fontSize: 30,
+            //                 fontWeight: FontWeight.bold,
+            //                 letterSpacing: 3.0,
+            //                 color: Colors.white),
+            //           );
+            //         }
+            //       });
+            //     },
+            //     icon: myIcon),
             IconButton(
               onPressed: () {
                 Navigator.push(
@@ -102,11 +94,13 @@ class _Home_screenState extends State<Home_screen> {
           bottom: const TabBar(tabs: [
             Tab(
               text: "Songs",
-              icon: Icon(Icons.music_note),
+              icon: Icon(
+                Icons.music_note,
+              ),
             ),
             Tab(
-              text: "Albums",
-              icon: Icon(Icons.album),
+              text: "Search",
+              icon: Icon(Icons.search),
             ),
             Tab(text: "Playist", icon: Icon(Icons.playlist_add))
           ]),
@@ -115,7 +109,9 @@ class _Home_screenState extends State<Home_screen> {
           Songstab(
             audiosongs: widget.allsong,
           ),
-          const Albumstab(),
+          SearchScreen(
+            audiosongs: widget.allsong,
+          ),
           const Library(),
         ]),
       ),

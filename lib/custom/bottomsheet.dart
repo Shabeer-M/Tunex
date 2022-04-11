@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:tunexx/database/Songdatabe.dart';
-
 import '../database/box.dart';
 
 class buildSheet extends StatefulWidget {
@@ -32,7 +31,7 @@ class _buildSheetState extends State<buildSheet> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.grey,
-        padding: EdgeInsets.only(top: 20, left: 5, right: 5),
+        padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
         child: ListView.builder(
           itemCount: dbSongs.length,
           itemBuilder: (context, index) {
@@ -53,8 +52,7 @@ class _buildSheetState extends State<buildSheet> {
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         image: DecorationImage(
-                          image: AssetImage(
-                              "assets/abstract-vector-element-music-design-260nw-1031659504.webp"),
+                          image: AssetImage("assets/defult.jpeg"),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -65,7 +63,7 @@ class _buildSheetState extends State<buildSheet> {
                   dbSongs[index].title!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 trailing: playlistSongs
                         .where((element) =>
@@ -76,18 +74,12 @@ class _buildSheetState extends State<buildSheet> {
                         onPressed: () async {
                           playlistSongs.add(dbSongs[index]);
                           await box.put(widget.playlistName, playlistSongs);
-                          //box.get(widget.playlistName);
 
-                          setState(() {
-                            // playlistSongs =
-                            //     box.get(widget.playlistName)!.cast<Songs>();
-                          });
+                          setState(() {});
                         },
                         icon: Icon(Icons.add))
                     : IconButton(
                         onPressed: () async {
-                          // await box.put(widget.playlistName, playlistSongs);
-
                           playlistSongs.removeWhere((elemet) =>
                               elemet.id.toString() ==
                               dbSongs[index].id.toString());

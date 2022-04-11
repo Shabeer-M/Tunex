@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:tunexx/database/Songdatabe.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../custom/buildsheet.dart';
 import '../database/box.dart';
 
@@ -25,7 +24,6 @@ class NowplayingState extends State<Nowplaying> {
 
   bool isPlaying = false;
   int rep = 0;
-  int suffle = 0;
 
   final AssetsAudioPlayer assetAudioPlayer = AssetsAudioPlayer.withId("0");
 
@@ -66,8 +64,11 @@ class NowplayingState extends State<Nowplaying> {
           builder: (context, Playing? playing) {
             final myAudio =
                 find(widget.audiosongs, playing!.audio.assetAudioPath);
+
             final currentSong = dbSongs.firstWhere((element) =>
                 element.id.toString() == myAudio.metas.id.toString());
+
+            likedSongs = box.get("favorites");
             return Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -108,12 +109,12 @@ class NowplayingState extends State<Nowplaying> {
                       shape: BoxShape.rectangle,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(60),
                       child: QueryArtworkWidget(
                         id: int.parse(myAudio.metas.id!),
                         type: ArtworkType.AUDIO,
                         nullArtworkWidget: Image.asset(
-                          "assets/abstract-vector-element-music-design-260nw-1031659504.webp",
+                          "assets/defult.jpeg",
                           height: 300,
                           width: 300,
                         ),
@@ -179,20 +180,23 @@ class NowplayingState extends State<Nowplaying> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.shuffle,
-                          color: assetAudioPlayer.isShuffling.value
-                              ? Colors.green
-                              : Colors.white,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            assetAudioPlayer.toggleShuffle();
-                          });
-                        },
-                      ),
+                      StatefulBuilder(builder: (BuildContext context,
+                          void Function(void Function()) setState) {
+                        return IconButton(
+                          icon: Icon(
+                            Icons.shuffle,
+                            color: assetAudioPlayer.isShuffling.value
+                                ? Colors.green
+                                : Colors.white,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              assetAudioPlayer.toggleShuffle();
+                            });
+                          },
+                        );
+                      }),
                       // SizedBox(
                       //   width: 25,
                       // ),
@@ -234,24 +238,27 @@ class NowplayingState extends State<Nowplaying> {
                           assetAudioPlayer.next();
                         },
                       ),
-                      IconButton(
-                        icon: Icon(
-                          repeatf,
-                          color: rep % 2 == 0 ? Colors.white : Colors.green,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (rep % 2 == 0) {
-                              assetAudioPlayer.setLoopMode(LoopMode.single);
-                              rep++;
-                            } else {
-                              assetAudioPlayer.setLoopMode(LoopMode.none);
-                              rep++;
-                            }
-                          });
-                        },
-                      ),
+                      StatefulBuilder(builder: (BuildContext context,
+                          void Function(void Function()) setState) {
+                        return IconButton(
+                          icon: Icon(
+                            repeatf,
+                            color: rep % 2 == 0 ? Colors.white : Colors.green,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              if (rep % 2 == 0) {
+                                assetAudioPlayer.setLoopMode(LoopMode.single);
+                                rep++;
+                              } else {
+                                assetAudioPlayer.setLoopMode(LoopMode.none);
+                                rep++;
+                              }
+                            });
+                          },
+                        );
+                      }),
                     ],
                   ),
                   // SizedBox(
@@ -263,10 +270,15 @@ class NowplayingState extends State<Nowplaying> {
                       IconButton(
                         color: Colors.white,
                         icon: const Icon(
-                          Icons.heart_broken,
+                          Icons.favorite_rounded,
                           size: 30,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          likedSongs?.add(currentSong);
+                          box.put("favorites", likedSongs!);
+                          likedSongs = box.get("favorites");
+                          setState(() {});
+                        },
                       ),
                       IconButton(
                         color: Colors.white,
@@ -279,7 +291,7 @@ class NowplayingState extends State<Nowplaying> {
                               backgroundColor: Colors.green[100],
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(80))),
+                                      top: Radius.circular(30))),
                               context: context,
                               builder: (context) => BuildSheet(song: myAudio)
                               // buildSheet(song: dbSongs[index]),
